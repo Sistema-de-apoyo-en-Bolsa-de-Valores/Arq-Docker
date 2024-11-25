@@ -1,0 +1,62 @@
+services:
+  db:
+    image: mysql:8
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=123"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  streamlit:
+    build:
+        context: predictor-streamlit-page
+    ports:
+      - "8501:8501"
+
+  stock-prediction:
+    build:
+      context: stock-prediction-api
+    env_file:
+      - ./stock-prediction-api/.env
+    ports:
+      - "8081:8081"
+
+  stock-purchase:
+    build:
+      context: stock-purchase-api
+    env_file:
+      - .env
+    ports:
+      - "8083:8083"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  sentiment-analysis:
+    build:
+      context: sentiment-news-analysis-api
+    env_file:
+      - ./sentiment-news-analysis-api/.env
+    ports:
+      - "8082:8082"
+  user-mgmt:
+    build:
+      context: user-mgmt-api
+    env_file:
+      - .env
+    ports:
+      - "8084:8084"
+    depends_on:
+      db:
+        condition: service_healthy
+  api-gateway:
+    build:
+      context: api-gateway
+    ports:
+        - "8080:8080"
