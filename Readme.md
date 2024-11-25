@@ -1,4 +1,11 @@
-Utilizar 
-Make build para construir el proyecto
-Make run para inicializar los contenedores
-Make down para apagarlos
+### 1. Construir el proyecto
+
+make build
+
+### 2. Iniciar los contenedores
+
+make run
+
+### 3. Apagar los contenedores
+
+make down
