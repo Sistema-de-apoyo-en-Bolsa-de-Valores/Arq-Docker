@@ -1,0 +1,18 @@
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/Sistema-de-apoyo-en-Bolsa-de-Valores/api-gateway.git
+[submodule "predictor-streamlit-page"]
+	path = predictor-streamlit-page
+	url = https://github.com/Sistema-de-apoyo-en-Bolsa-de-Valores/predictor-streamlit-page.git
+[submodule "sentiment-news-analysis-api"]
+	path = sentiment-news-analysis-api
+	url = https://github.com/Sistema-de-apoyo-en-Bolsa-de-Valores/sentiment-news-analysis-api.git
+[submodule "stock-prediction-api"]
+	path = stock-prediction-api
+	url = https://github.com/Sistema-de-apoyo-en-Bolsa-de-Valores/stock-prediction-api.git
+[submodule "stock-purchase-api"]
+	path = stock-purchase-api
+	url = https://github.com/Sistema-de-apoyo-en-Bolsa-de-Valores/stock-purchase-api.git
+[submodule "user-mgmt-api"]
+	path = user-mgmt-api
+	url = https://github.com/Sistema-de-apoyo-en-Bolsa-de-Valores/user-mgmt-api.git
