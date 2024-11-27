@@ -12,40 +12,10 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+    networks:
+      - my_network
 
-  streamlit:
-    build:
-        context: predictor-streamlit-page
-    ports:
-      - "8501:8501"
-
-  stock-prediction:
-    build:
-      context: stock-prediction-api
-    env_file:
-      - ./stock-prediction-api/.env
-    ports:
-      - "8081:8081"
-
-  stock-purchase:
-    build:
-      context: stock-purchase-api
-    env_file:
-      - .env
-    ports:
-      - "8083:8083"
-    depends_on:
-      db:
-        condition: service_healthy
-
-  sentiment-analysis:
-    build:
-      context: sentiment-news-analysis-api
-    env_file:
-      - ./sentiment-news-analysis-api/.env
-    ports:
-      - "8082:8082"
-  user-mgmt:
+  arq-user-mgmt-1:
     build:
       context: user-mgmt-api
     env_file:
@@ -55,8 +25,58 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  api-gateway:
+    networks:
+      - my_network
+
+  arq-stock-purchase-1:
+    build:
+      context: stock-purchase-api
+    env_file:
+      - .env
+    ports:
+      - "8083:8083"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - my_network
+
+  arq-stock-prediction-1:
+    build:
+      context: stock-prediction-api
+    env_file:
+      - ./stock-prediction-api/.env
+    ports:
+      - "8081:8081"
+    networks:
+      - my_network
+
+  arq-sentiment-analysis-1:
+    build:
+      context: sentiment-news-analysis-api
+    env_file:
+      - ./sentiment-news-analysis-api/.env
+    ports:
+      - "8082:8082"
+    networks:
+      - my_network
+
+  arq-api-gateway-1:
     build:
       context: api-gateway
     ports:
         - "8080:8080"
+    networks:
+      - my_network
+
+  streamlit:
+    build:
+        context: predictor-streamlit-page
+    ports:
+      - "8501:8501"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
